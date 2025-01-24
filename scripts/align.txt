@@ -28,7 +28,7 @@ library=$(echo $fq1 | cut -f 5 -d "/" | cut -f 3 -d "_")
 
 rg=$(echo \@RG\\tID:$sample\\tPL:Illumina\\tPU:x\\tLB:${library}_${run}\\tSM:$sample)
 tempsort=$sample.$library.$run.temp
-outfile=$outdir/$sample_$library.bam
+outfile=$outdir$sample_$library.bam
 
 echo $SLURM_ARRAY_TASK_ID
 echo $sample
