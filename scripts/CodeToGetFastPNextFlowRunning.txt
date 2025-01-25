@@ -1,3 +1,5 @@
+#went to main directory /scratch2/nvollmer, started a new screen and used the code below, then detached from screen
+
 mamba activate nextflow-24.04.4
 
 nextflow run /scratch2/nvollmer/scripts/fastp.nf --input_dir '241129_NOA015_PanTrop_WGS,241129_NOA016_PanTrop_WGS,250103_NOA015_RERUN_PanTrop_WGS,250103_NOA016_RERUN_PanTrop_WGS,250115_NOA016_PanTrop_WGS_8Satt149-152' --outdir trimmed -profile fastp
