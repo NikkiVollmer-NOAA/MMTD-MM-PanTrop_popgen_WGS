@@ -1,5 +1,5 @@
+## see https://github.com/rsbrennan-NOAA/misc_resources/tree/main/fastp_nextflow
 ## Both the fastp.nf and nextflow.config files were in /scratch2/nvollmer/scripts; the went to main directory /scratch2/nvollmer and started a new screen and used the code below, then detached from screen
-
 ## Code will loop through all folders in '' below, and in main directory create a trimmed folder to put the trimmed or "clipped" files
 
 mamba activate nextflow-24.04.4
