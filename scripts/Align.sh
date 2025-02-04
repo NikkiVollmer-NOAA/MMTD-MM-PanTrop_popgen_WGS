@@ -11,6 +11,8 @@
 #SBATCH --error=%x.%A.%a.err+
 #SBATCH --array=[1-285]%25
 
+#One of the largest directories timed out using a 2hr limit so went big with 24 hr
+
 module load bio/samtools/1.19
 module load aligners/bwa-mem2/2.2.1
 
