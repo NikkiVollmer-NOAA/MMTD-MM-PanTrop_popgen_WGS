@@ -11,7 +11,8 @@
 #SBATCH --error=%x.%A.%a.err+
 #SBATCH --array=[1-285]%25
 
-#One of the largest directories timed out using a 2hr limit so went big with 24 hr
+#One of the largest directories timed out using a 2hr limit so went big with 24 hr. Per Giles "requesting 24 hrs for jobs that take 1 hr shouldn't be a problem. 
+#Its just the max amount of time that the job could possibly run, you're not really wasting resources if it only goes for one hour if that is what you're thinking"
 
 module load bio/samtools/1.19
 module load aligners/bwa-mem2/2.2.1
