@@ -1,7 +1,14 @@
 ## see https://github.com/rsbrennan-NOAA/misc_resources/tree/main/fastp_nextflow
-## Both the fastp.nf and nextflow.config files were in /scratch2/nvollmer/scripts; the went to main directory /scratch2/nvollmer and started a new screen and used the code below, then detached from screen
+## Both the fastp.nf and nextflow.config files were in /scratch2/nvollmer/scripts; then went to main directory /scratch2/nvollmer and started a new screen and used the code below, then detached from screen
 ## Code will loop through all folders in '' below, and in main directory create a trimmed folder to put the trimmed or "clipped" files
 
 mamba activate nextflow-24.04.4
 
+#fastp
 nextflow run /scratch2/nvollmer/scripts/fastp.nf --input_dir '241129_NOA015_PanTrop_WGS,241129_NOA016_PanTrop_WGS,250103_NOA015_RERUN_PanTrop_WGS,250103_NOA016_RERUN_PanTrop_WGS,250115_NOA016_PanTrop_WGS_8Satt149-152' --outdir trimmed -profile fastp
+
+#trimmomatic
+nextflow run /scratch2/nvollmer/scripts/trimmomatic.nf --input_dir 'TrimRedo' --outdir trimmed-trimmomatic\TrimRedo  -with-tower --adapter_file NexteraPE_NT.fa -profile trimmomatic
+
+#withTower
+nextflow run scripts/fastp.nf --input_dir 'data/1842,data/3420,data/3421,data/3422,data/3423,data/3424,data/3425' --outdir analysis/trimmed_reads -with-tower -resume -profile fastp
