@@ -21,6 +21,7 @@ module load bio/fastqc/0.11.9
 
 cd /scratch2/nvollmer/trimmed-trimmomatic
 
+#list all the directories you want to run, found in the path above, separated by a space
 for input_dir in 241129_NOA015_PanTrop_WGS 241129_NOA016_PanTrop_WGS 250103_NOA015_RERUN_PanTrop_WGS 250115_NOA016_PanTrop_WGS_8Satt149-152
 do
     mkdir -p analysis/fastqc_trimmed/${input_dir}/
