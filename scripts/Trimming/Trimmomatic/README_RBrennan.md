@@ -6,6 +6,8 @@ You should put the `trimmomati.nf`, `nextflow.config`, and `NexteraPE_NT.fa` in 
 
 **IMPORTANT**: The naming of the reads matters. They're currently set to be `SAMPLEID_R1_001.fastq.gz` and `SAMPLEID_R2_001.fastq.gz`. It will not work if there is any other structure. This could be modified in line 67 of trimmomatic.nf.
 
+ALSO, this process creates a folder named "work" that is big and can be deleled once the trimming process is complete
+
 
 The trimmomatic command in the script is:
 
