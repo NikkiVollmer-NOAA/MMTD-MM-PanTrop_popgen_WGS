@@ -11,6 +11,10 @@
 #SBATCH --error=%x.%A.%a.err+
 #SBATCH --array=[1-285]%25
 
+#More array info for line 12: The total number should be equal to the number of samples you want to run. 
+#It will run up to that number of jobs you put here: --array=[1-285]%25, so 285. 
+#If you have 600, then only the first 285 will run. If you have 100, but say 285, the 100 will run. So you should set it to the number of samples you have.
+
 #One of the largest directories timed out using a 2hr limit so went big with 24 hr. Per Giles "requesting 24 hrs for jobs that take 1 hr shouldn't be a problem. 
 #Its just the max amount of time that the job could possibly run, you're not really wasting resources if it only goes for one hour if that is what you're thinking"
 
