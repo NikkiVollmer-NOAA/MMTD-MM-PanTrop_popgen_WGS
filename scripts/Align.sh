@@ -22,10 +22,9 @@ module load bio/samtools/1.19
 module load aligners/bwa-mem2/2.2.1
 
 #need to make the outdir folder that you want it to put the output files in and make sure there is a ending '/'
-indir=/scratch2/nvollmer/trimmed-trimmomatic/241129_NOA015_PanTrop_WGS/
+indir=/scratch2/nvollmer/trimmed-trimmomatic/241129_NOA016_PanTrop_WGS_Satt005_8Satt204/
 bwagenind=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta.gz
-outdir=/scratch2/nvollmer/analysis/alignment/241129_NOA015_PanTrop_WGS/
-run=run1
+outdir=/scratch2/nvollmer/analysis/alignment/241129_NOA016_PanTrop_WGS_Satt005_8Satt204/
 
 
 fq1=$(find $indir -name "*_paired.R1.fq.gz" | sed -n $(echo $SLURM_ARRAY_TASK_ID)p)
@@ -34,12 +33,16 @@ sample=$(echo $fq1 | cut -f 6 -d "/" | cut -f 1 -d "_")
 #Per Reid decided to use separate library names for each sample. just to be super careful. why? "because you'll mark duplicates for each merged bam separately, I don't think it actually matters. 
 #but just in case, you can call each sample its own library." so made library variable be same as sample variable for the RG
 #OLD:library=$(echo $fq1 | cut -f 5 -d "/" | cut -f 2 -d "_")
-library=$(echo $fq1 | cut -f 6 -d "/" | cut -f 1 -d "_")
+samplelane=$(echo $fq1 | cut -f 6 -d "/" | cut -f 3 -d "_")
+#library=$(echo $fq1 | cut -f 6 -d "/" | cut -f 1 -d "_")
 
 
-rg=$(echo \@RG\\tID:$sample\\tPL:Illumina\\tPU:x\\tLB:${library}_${run}\\tSM:$sample)
-tempsort=$sample.$library.$run.temp
-outfile=$outdir$sample_$library.bam
+#rg=$(echo \@RG\\tID:$sample\\tPL:Illumina\\tPU:x\\tLB:${library}_${run}\\tSM:$sample)
+rg=$(echo \@RG\\tID:$sample\\tPL:Illumina\\tPU:x\\tLB:${sample}\\tSM:$sample)
+#tempsort=$sample.$library.$run.temp
+tempsort=$sample.$samplelane.temp
+#outfile=$outdir$sample_$library.bam
+outfile=$outdir${sample}_$samplelane.bam
 
 echo $SLURM_ARRAY_TASK_ID
 echo $sample
