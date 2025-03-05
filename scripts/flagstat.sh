@@ -25,3 +25,6 @@ samtools flagstat $sample>Flagstat/$f1-stats.txt
 
 done
 
+## then once that is done running, can go into Flagstat folder and used following to pull out first row in each file (which has info on #reads) 
+##and then puts it all into a text file 
+head -1 *stats.txt > test.txt
