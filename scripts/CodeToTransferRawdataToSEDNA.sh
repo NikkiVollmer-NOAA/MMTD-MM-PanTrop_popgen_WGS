@@ -38,6 +38,8 @@ aws s3 cp --profile wasabi --endpoint-url=https://s3.wasabisys.com s3://seqmatic
 
 #for each screen will get a # like 2169555
 
+#to detach from a screen hit cntr+A then D
+
 #to see the screens active
 screen -ls
  
