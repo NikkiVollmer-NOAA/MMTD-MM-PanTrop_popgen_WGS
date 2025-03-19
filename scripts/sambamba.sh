@@ -4,12 +4,12 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=medmem
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
+#SBATCH --mem=70G
 #SBATCH --time=40:00:00
 #SBATCH --job-name=sambamba
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
-#SBATCH --array=[1-190]%30 
+#SBATCH --array=[1-190]%15
 
 # can test with array of 1-2, but should be 1-190 for real run
 
