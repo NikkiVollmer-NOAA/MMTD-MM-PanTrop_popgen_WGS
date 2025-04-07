@@ -1,4 +1,3 @@
-
 #!/usr/bin/env nextflow
 
 // Define input parameters
