@@ -26,9 +26,12 @@ inbam=$(ls *.bam | cut -f 1 -d "." | cut -f 1 -d "_" |  sed -n $(echo $SLURM_ARR
 #echo the inbam to make sure all the cutting was correct so you are left with just the sample names
 echo $inbam
 
+#go to the output folder
+cd $output
+
 #this creates the format naming for the output files which will be save in output directory called above
 #and then be named with just sample name (from inbam) and then _clipped.bam
-output_file="${output}${inbam}_clipped.bam"
+output_file="${inbam}_clipped.bam"
 
 #running the actual clipOverlap code calling --in input files and --out output files and running --stats option
-bam clipOverlap --in ${inbam}_mkdup.bam --out $output_file --stats 
+bam clipOverlap --in ${bams}/${inbam}_mkdup.bam --out $output_file --stats 
