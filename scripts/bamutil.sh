@@ -4,7 +4,7 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=12G
+#SBATCH --mem=30G
 #SBATCH --time=18:00:00
 #SBATCH --job-name=bamutil
 #SBATCH --output=%x.%A.%a.out
@@ -34,4 +34,4 @@ cd $output
 output_file="${inbam}_clipped.bam"
 
 #running the actual clipOverlap code calling --in input files and --out output files and running --stats option
-bam clipOverlap --in ${bams}/${inbam}_mkdup.bam --out $output_file --stats 
+bam clipOverlap --in ${bams}/${inbam}_mkdup.bam --out $output_file --stats --poolSize 5000000
