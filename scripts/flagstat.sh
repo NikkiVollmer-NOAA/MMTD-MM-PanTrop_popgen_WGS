@@ -20,7 +20,7 @@ for sample in *.bam
 do
 
 f1=${sample%.bam}
-
+#need to create a folder called Flagstat in the appropriate directory
 samtools flagstat $sample>Flagstat/$f1-stats.txt
 
 done
