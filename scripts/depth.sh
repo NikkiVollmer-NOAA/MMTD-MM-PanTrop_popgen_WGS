@@ -7,7 +7,7 @@
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=12G
-#SBATCH --time=12:00:00
+#SBATCH --time=60:00:00
 #SBATCH --job-name=samtools
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
