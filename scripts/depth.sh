@@ -27,6 +27,4 @@ samtools depth $sample>Depth/$f1-stats.txt
 
 done
 
-## then once that is done running, can go into Depth folder and used following to pull out first row in each file (which has info on depth) 
-##and then puts it all into a text file 
-head -1 *stats.txt > test.txt
+
