@@ -15,7 +15,7 @@ cd /scratch2/nvollmer/analysis/Clipped
 ## Realign around in-dels
 # This is done across all samples at once
 
-GATK=~/bin/GenomeAnalysisTK.jar
+GATK=~/bin/GenomeAnalysisTK.jar#had to download older version of GATK - 3.8.1 to get these realigner functions https://console.cloud.google.com/storage/browser/gatk-software/package-archive/gatk;tab=objects?prefix=&forceOnObjectsSortingFiltering=false
 BASEDIR=/scratch2/nvollmer/analysis/Clipped
 BAMLIST=/scratch2/nvollmer/analysis/Clipped/bam_list.list #make sure file name ends in .list
 REFERENCE=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta #need to make sure reference is uncompressed and there is a .fai and .dict file - see gatk_fasta.txt
