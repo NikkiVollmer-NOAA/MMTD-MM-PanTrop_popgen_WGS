@@ -16,8 +16,9 @@ cd /scratch2/nvollmer/analysis/Clipped
 
 GATK=~/bin/GenomeAnalysisTK.jar
 BASEDIR=/scratch2/nvollmer/analysis/Clipped
-BASELIST=/scratch2/nvollmer/analysis/Clipped/bam_list.txt
-REFERENCE=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta.gz
+BAMLIST=/scratch2/nvollmer/analysis/Clipped/bam_list.list #make sure file name ends in .list
+REFERENCE=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta #need to make sure reference is uncompressed and then need to run gatk-launch CreateSequenceDictionary -R ref.fasta
+#and samtools faidx ref.fasta (see https://gatk.broadinstitute.org/hc/en-us/articles/360035531652-FASTA-Reference-genome-format)
 
 ## Create list of potential in-dels
 java -Xmx96g -jar $GATK \
