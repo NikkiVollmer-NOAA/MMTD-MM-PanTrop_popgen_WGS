@@ -1,0 +1,15 @@
+#To run the GATK code for creating a list of potential indels and running the indel realinger tool (realign_realign.sh) need to first 
+#uncompress the ref genome if it is compressed 
+
+#navigate to the directory where ref seq files are
+gunzip Stenella_attenuata_HiC.fasta.gz
+
+#then need to create the .dict file, tried doing this with gatk but had issues so used picard instead
+#https://gatk.broadinstitute.org/hc/en-us/articles/360037422891-CreateSequenceDictionary-Picard
+java -jar $PICARD CreateSequenceDictionary R=Stenella_attenuata_HiC.fasta O=Stenella_attenuata_HiC.dict
+
+#then use samtools to create indexed .fai file
+#https://gatk.broadinstitute.org/hc/en-us/articles/360035531652-FASTA-Reference-genome-format
+module load bio/samtools
+samtools faidx Stenella_attenuata_HiC.fasta
+
