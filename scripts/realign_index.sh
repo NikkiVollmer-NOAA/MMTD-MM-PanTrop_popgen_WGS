@@ -23,10 +23,3 @@ inbam=$(ls *.bam | sed -n $(echo $SLURM_ARRAY_TASK_ID)p)
 
 ## Index bam files
 samtools index $inbam 
-
-
-   -R $REFERENCE \
-   -I $BAMLIST \
-   -targetIntervals $BASEDIR'bam/all_samples_for_indel_realigner.intervals' \
-   --consensusDeterminationModel USE_READS  \
-   --nWayOut _realigned.bam
