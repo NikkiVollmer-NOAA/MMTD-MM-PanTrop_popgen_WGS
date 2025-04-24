@@ -11,6 +11,7 @@
 
 cd /scratch2/nvollmer/analysis/Clipped
 
+#adapted code from here https://github.com/therkildsen-lab/data-processing/blob/61eca5aea336f6594b44427ace58a419e0290696/scripts/realign_indels.sh#L34-L58
 ## Realign around in-dels
 # This is done across all samples at once
 
