@@ -11,6 +11,10 @@
 #SBATCH --time=99:00:00
 #SBATCH --array=1-22 # 21 large scaffolds. then lump the rest into 1
 
+####It was going to take more than a month to complete the realignment with out paralellizing it (using the realign_realign.sh code) so decided to 
+#break it up by running the 21 biggest scaffolds - presumably the chromosomes - each separately, then doing all the remaining smaller scaffolds 
+#together in one lump
+
 # split the array by scaffold
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # make a list of scaffolds, before running the array script:
