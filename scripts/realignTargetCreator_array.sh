@@ -5,11 +5,11 @@
 #SBATCH --job-name=realign
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
-#SBATCH --cpus-per-task=8   # 8 data threads + 4 GC threads
-#SBATCH --mem=72G
+#SBATCH --cpus-per-task=6   # 6 data threads + 4 GC threads
+#SBATCH --mem=300G #had this at 72 but we think it kept getting stuck so upped it a lot
 #SBATCH --partition=standard          
 #SBATCH --time=99:00:00
-#SBATCH --array=1-22 # 21 large scaffolds. then lump the rest into 1
+#SBATCH --array=1-22%4 # 21 large scaffolds. then lump the rest into 1
 
 ####It was going to take more than a month to complete the realignment with out paralellizing it (using the realign_realign.sh code) so decided to 
 #break it up by running the 21 biggest scaffolds - presumably the chromosomes - each separately, then doing all the remaining smaller scaffolds 
@@ -41,7 +41,7 @@ else
   output_file="${BASEDIR}/small_scaffolds.intervals"
 fi
 
-java -Xmx56G -XX:ParallelGCThreads=4 -jar ${GATK} \
+java -Xmx280G -jar ${GATK} \
   -T RealignerTargetCreator \
   -nt 4 \
   -R ${REFERENCE} \
