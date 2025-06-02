@@ -4,11 +4,11 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=medmem
 #SBATCH --mem=120G
-#SBATCH --time=99:00:00
+#SBATCH --time=7-00
 #SBATCH --job-name=realign_array
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
-#SBATCH --array=1-10  # Adjust based on total number of batches needed
+#SBATCH --array=1-7  # Adjust based on total number of batches needed = 190 bams/30batches = 6.33 rounded up =7
 
 ##first tried doing this realignment across all bams at once (see realign_realign_allbams.sh) but it timed out and would end up taking many weeks. So created this code
 ## which does the bams in batches
