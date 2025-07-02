@@ -23,6 +23,9 @@ f1=${sample%.bam}
 #need to create a folder in Clipped called Depth
 samtools depth $sample>Depth/$f1-stats.txt
 
+#to get depth at all bp in each sample
+#samtools depth -aa $sample | gzip > Depth/$f1-clipped_realigned_depth_stats.gz
+
 done
 
 
