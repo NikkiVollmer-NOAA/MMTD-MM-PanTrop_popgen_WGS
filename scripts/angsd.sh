@@ -25,7 +25,7 @@ angsd -b  $BASEDIR/ANGSD_bams.txt -ref $REFERENCE -out $BASEDIR/ANGSD \
   	-setMinDepth 3 -minInd 142 -SNP_pval 1e-6 -doMajorMinor 1 -doMaf 1 -minMAF 0.05 \
  	 -GL 1 -doGLF 2 \ #2=GATK or 1=Samtools; 4=output in text format or 2=beagle and seems popular
 
-#	-r chr1:1-500000
+#	-r HiC_scaffold_1:1-500000
 #####unsure if I should use anything below this line for first run, those with ## are in the code above, those with # are not
 #-C 50 #reduces the effect of reads with excessive mismatches
 #-baq 1 #computes base alignment quality used to rule out false SNPs close to INDELS
