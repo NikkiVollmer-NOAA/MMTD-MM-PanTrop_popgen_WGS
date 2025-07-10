@@ -35,6 +35,6 @@ java -Xmx96g -jar $GATK \
    -T IndelRealigner \
    -R $REFERENCE \
    -I $BAMLIST \
-   -targetIntervals $BASEDIR'/intervals/concat.intervals' \
+   -targetIntervals $BASEDIR'/intervals/concat.intervals' \ #this concat.invtervals file should have been previously created so make sure if the basedir is changed above that this line still takes you to the concat.intervals file
    --consensusDeterminationModel USE_READS  \
    --nWayOut _realigned.bam
