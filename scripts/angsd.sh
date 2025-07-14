@@ -20,7 +20,7 @@ SCAFFOLD_DIR=/scratch2/nvollmer/refseq
 
 angsd -b  $BASEDIR/ANGSD_bams.txt -ref $REFERENCE -out $BASEDIR/ANGSD -rf $SCAFFOLD_DIR/ref_chrom.txt \
 	-uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -minMapQ 25 -minQ 25 -skipTriallelic 1 \
-  	-doCounts 1 -setMinDepth 3 -minInd 142 -SNP_pval 1e-6 -doMajorMinor 1 -doMaf 1 -minMAF 0.05 \
+  	-doCounts 1 -minInd 142 -SNP_pval 1e-6 -doMajorMinor 1 -doMaf 1 -minMAF 0.05 \
  	-GL 1 -doGLF 2 -nThreads 6 -doVcf 1\ #2=GATK or 1=Samtools; 4=output in text format or 2=beagle and seems popular
 
 #	-r HiC_scaffold_1:1-500000
@@ -28,7 +28,7 @@ angsd -b  $BASEDIR/ANGSD_bams.txt -ref $REFERENCE -out $BASEDIR/ANGSD -rf $SCAFF
 #-C 50 #reduces the effect of reads with excessive mismatches
 #-baq 1 #computes base alignment quality used to rule out false SNPs close to INDELS
 ##-minInd 142 #use only sites with data from at least 75% individuals, 142 of 190
-##-setMinDepth 1 #Discard site if total sequencing depth (all individuals added together) is below [int]. Requires -doCounts
+#-setMinDepth 1 #Discard site if total sequencing depth (all individuals added together) is below [int]. Requires -doCounts
 #-setMaxDepth 30 #Filters out sites where the total depth across all individuals exceeds a threshold. Requires -doCounts
 #-setMinDepthInd #Discard individual if sequencing depth for an individual is below [int]. This filter is only applied to analysis which are based on counts of alleles i.e. analysis that uses -doCounts
 #-setMaxDepthInd #Discard individual if sequencing depth for an individual is above [int]. This filter is only applied to analysis which are based on counts of alleles i.e. analysis that uses -doCounts
