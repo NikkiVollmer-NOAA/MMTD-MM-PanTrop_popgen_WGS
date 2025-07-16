@@ -22,7 +22,7 @@ SCAFFOLD_NAMES=/scratch2/nvollmer/refseq/ref_chrom.list
 SCAFFOLD_NAMES_target=$(cat $SCAFFOLD_DIR/ref_chrom.txt | sed -n ${SLURM_ARRAY_TASK_ID}p)
 SCAFFOLD_NAMES_target_name=${SCAFFOLD_NAMES_target/.txt/}
 
-angsd -b  $BASEDIR/ANGSD_bams.txt -ref $REFERENCE -out $BASEDIR/ANGSDresults/$SCAFFOLD_NAMES_target -rf $SCAFFOLD_NAMES_target \
+angsd -b  $BASEDIR/ANGSD_bams.txt -ref $REFERENCE -out $BASEDIR/ANGSDresults/$SCAFFOLD_NAMES_target -r $SCAFFOLD_NAMES_target \
 	-uniqueOnly 1 -remove_bads 1 -only_proper_pairs 1 -trim 0 -minMapQ 25 -minQ 25 -skipTriallelic 1 \
   	-doCounts 1 -minInd 142 -SNP_pval 1e-6 -doMajorMinor 1 -doMaf 1 -minMAF 0.05 \
  	-GL 1 -doGLF 2 -doPost 1 -nThreads 6 -dobcf 1 #2=GATK or 1=Samtools; 4=output in text format or 2=beagle and seems popular
