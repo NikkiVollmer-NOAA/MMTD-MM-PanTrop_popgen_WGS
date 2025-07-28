@@ -1,0 +1,82 @@
+#####ngsLD requires two input files:
+
+# --geno FILE: input file with genotypes, genotype likelihoods or genotype posterior probabilities. 
+#With low-coverage data, a genotype likelihood file is often used, in which each row is a SNP and 
+#each individual has three columns correponding to the likelihood of the three genotypes 
+#(we only need to keep track of the likelihood of three genotypes (rather than all ten possible) 
+#when the major and minor allele has been inferred). Therefore, a beagle formatted genotype 
+#likelihood file generated from ANGSD (-doGlf 2) can be inputted into ngsLD after the header row 
+#and the first three columns (i.e. positions, major allele, minor allele) are removed. 
+
+#to sample every other snp
+zcat HiC_scaffold_1.beagle.gz | tail -n +2 | awk 'NR % 2 == 0'| cut -f4- | gzip > HiC_scaffold_1_subsampled.beagle.gz
+
+#to sample all snps
+zcat HiC_scaffold_1.beagle.gz | tail -n +2 | cut -f4- | gzip > HiC_scaffold_1_trimmed.beagle.gz
+
+
+# --pos FILE: input file with site coordinates (one per line), where the 1st column stands for the 
+#chromosome/contig and the 2nd for the position (bp). One convenient way to generate this is by 
+#selecting the first two columns of the mafs file outputted by ANGSD, with the header removed. 
+
+#to sample every other snp
+zcat HiC_scaffold_1.mafs.gz | tail -n +2 | awk 'NR % 2 == 0'| cut -f1-2 | gzip > HiC_scaffold_1_subsampled.pos.gz
+
+#to sample all snps
+zcat HiC_scaffold_1.mafs.gz | tail -n +2 | cut -f1-2 | gzip > HiC_scaffold_1.pos.gz
+
+
+# To get the number of sites in each scaffold for --n_sites INT: total number of sites
+
+zcat HiC_scaffold_1.pos.gz | wc -l
+
+# To get the number of sites in all scaffolds for --n_sites INT: total number of sites
+
+for file in HiC_scaffold_*.pos.gz; do echo "$(zcat "$file" | wc -l) $file"; done
+
+All snps:
+744852 HiC_scaffold_10.pos.gz
+706222 HiC_scaffold_11.pos.gz
+690043 HiC_scaffold_12.pos.gz
+604114 HiC_scaffold_13.pos.gz
+616002 HiC_scaffold_14.pos.gz
+597806 HiC_scaffold_15.pos.gz
+614298 HiC_scaffold_16.pos.gz
+534110 HiC_scaffold_17.pos.gz
+547035 HiC_scaffold_18.pos.gz
+394695 HiC_scaffold_19.pos.gz
+1220648 HiC_scaffold_1.pos.gz
+389779 HiC_scaffold_20.pos.gz
+561084 HiC_scaffold_21.pos.gz
+1168950 HiC_scaffold_2.pos.gz
+1161215 HiC_scaffold_3.pos.gz
+980850 HiC_scaffold_4.pos.gz
+960087 HiC_scaffold_5.pos.gz
+886136 HiC_scaffold_6.pos.gz
+792303 HiC_scaffold_7.pos.gz
+759271 HiC_scaffold_8.pos.gz
+727599 HiC_scaffold_9.pos.gz
+
+Every other SNP:
+372426 HiC_scaffold_10_subsampled.pos.gz
+353111 HiC_scaffold_11_subsampled.pos.gz
+345021 HiC_scaffold_12_subsampled.pos.gz
+302057 HiC_scaffold_13_subsampled.pos.gz
+308001 HiC_scaffold_14_subsampled.pos.gz
+298903 HiC_scaffold_15_subsampled.pos.gz
+307149 HiC_scaffold_16_subsampled.pos.gz
+267055 HiC_scaffold_17_subsampled.pos.gz
+273517 HiC_scaffold_18_subsampled.pos.gz
+197347 HiC_scaffold_19_subsampled.pos.gz
+610324 HiC_scaffold_1_subsampled.pos.gz
+194889 HiC_scaffold_20_subsampled.pos.gz
+280542 HiC_scaffold_21_subsampled.pos.gz
+584475 HiC_scaffold_2_subsampled.pos.gz
+580607 HiC_scaffold_3_subsampled.pos.gz
+490425 HiC_scaffold_4_subsampled.pos.gz
+480043 HiC_scaffold_5_subsampled.pos.gz
+443068 HiC_scaffold_6_subsampled.pos.gz
+396151 HiC_scaffold_7_subsampled.pos.gz
+379635 HiC_scaffold_8_subsampled.pos.gz
+363799 HiC_scaffold_9_subsampled.pos.gz
+
