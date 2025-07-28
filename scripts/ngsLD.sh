@@ -4,8 +4,8 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=himem
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=40G
-#SBATCH --time=24:00:00
+#SBATCH --mem=20G
+#SBATCH --time=48:00:00
 #SBATCH --job-name=ngsld
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
@@ -22,8 +22,8 @@ N_SITES=$(grep -w $SCAFFOLD_NAMES_target_name $BASEDIR/sites.txt | cut -f 2)
 
 
 ngsLD \
---geno ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_trimmed.beagle.gz \
---pos ${BASEDIR}/${SCAFFOLD_NAMES_target_name}.pos.gz \
+--geno ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled.beagle.gz \
+--pos ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled.pos.gz \
 --probs \
 --n_ind 190 \
 --n_sites $N_SITES \
