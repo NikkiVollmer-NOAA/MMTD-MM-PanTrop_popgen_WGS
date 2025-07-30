@@ -14,4 +14,5 @@ module load R/4.4.1
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/GLF_2/ngsLD
 
-Rscript --vanilla --slave /opt/bioinformatics/bio/ngsld/ngsld-1.2.0/scripts/fit_LDdecay.R --ld_files ${BASEDIR}/ld_files.list --out ${BASEDIR}/plot.pdf
+Rscript --vanilla --slave /opt/bioinformatics/bio/ngsld/ngsld-1.2.0/scripts/fit_LDdecay.R \
+--ld_files ${BASEDIR}/ld_files.list --fit_level 0 --out ${BASEDIR}/plot.pdf
