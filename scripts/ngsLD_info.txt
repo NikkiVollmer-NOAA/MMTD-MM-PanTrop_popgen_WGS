@@ -12,7 +12,7 @@
 zcat HiC_scaffold_1.beagle.gz | tail -n +2 | awk 'NR % 2 == 0'| cut -f4- | gzip > HiC_scaffold_1_subsampled.beagle.gz
 
 #to sample every 10th snp
-zcat HiC_scaffold_1.beagle.gz | tail -n +2 | awk 'NR % 10 == 0'| cut -f4- | gzip > HiC_scaffold_1_subsampled.beagle.gz
+zcat HiC_scaffold_1.beagle.gz | tail -n +2 | awk 'NR % 10 == 0'| cut -f4- | gzip > HiC_scaffold_1_subsampled_10.beagle.gz
 
 #to sample all snps
 zcat HiC_scaffold_1.beagle.gz | tail -n +2 | cut -f4- | gzip > HiC_scaffold_1_trimmed.beagle.gz
@@ -24,6 +24,9 @@ zcat HiC_scaffold_1.beagle.gz | tail -n +2 | cut -f4- | gzip > HiC_scaffold_1_tr
 
 #to sample every other snp
 zcat HiC_scaffold_1.mafs.gz | tail -n +2 | awk 'NR % 2 == 0'| cut -f1-2 | gzip > HiC_scaffold_1_subsampled.pos.gz
+
+#to sample every 10th snp
+zcat HiC_scaffold_1.mafs.gz | tail -n +2 | awk 'NR % 10 == 0'| cut -f1-2 | gzip > HiC_scaffold_1_subsampled_10.pos.gz
 
 #to sample all snps
 zcat HiC_scaffold_1.mafs.gz | tail -n +2 | cut -f1-2 | gzip > HiC_scaffold_1.pos.gz
