@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log/array_ngsld
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
@@ -18,7 +18,7 @@ SCAFFOLD_NAMES=/scratch2/nvollmer/refseq/ref_chrom.list
 SCAFFOLD_DIR=/scratch2/nvollmer/refseq
 SCAFFOLD_NAMES_target=$(cat $SCAFFOLD_DIR/ref_chrom.txt | sed -n ${SLURM_ARRAY_TASK_ID}p)
 SCAFFOLD_NAMES_target_name=${SCAFFOLD_NAMES_target/.txt/}
-N_SITES=$(grep -w $SCAFFOLD_NAMES_target_name $BASEDIR/sites.txt | cut -f 2)
+N_SITES=$(grep -w $SCAFFOLD_NAMES_target_name $BASEDIR/sites_10.txt | cut -f 2)
 
 
 ngsLD \
@@ -29,9 +29,8 @@ ngsLD \
 --n_sites $N_SITES \
 --max_kb_dist 25 \
 --n_threads 6 \
---out $BASEDIR/ngsLD/$SCAFFOLD_NAMES_target
+--out $BASEDIR/ngsLD_25kb/${SCAFFOLD_NAMES_target}.ld
 
 #am using max_kb_dist = 25 (25kb) based on LDdecay graphs
-
 
 
