@@ -1,5 +1,3 @@
-  GNU nano 2.9.8                                                                            angsdPCA.sh
-
 #!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
