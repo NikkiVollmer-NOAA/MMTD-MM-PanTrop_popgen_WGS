@@ -22,11 +22,16 @@ N_SITES=$(grep -w $SCAFFOLD_NAMES_target_name $BASEDIR/sites.txt | cut -f 2)
 
 
 ngsLD \
---geno ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled.beagle.gz \
---pos ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled.pos.gz \
+--geno ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled_10.beagle.gz \
+--pos ${BASEDIR}/${SCAFFOLD_NAMES_target_name}_subsampled_10.pos.gz \
 --probs \
 --n_ind 190 \
 --n_sites $N_SITES \
---max_kb_dist 1000 \
+--max_kb_dist 25 \
 --n_threads 6 \
 --out $BASEDIR/ngsLD/$SCAFFOLD_NAMES_target
+
+#am using max_kb_dist = 25 (25kb) based on LDdecay graphs
+
+
+
