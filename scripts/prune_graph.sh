@@ -19,5 +19,6 @@ SCAFFOLD_DIR=/scratch2/nvollmer/refseq
 SCAFFOLD_NAMES_target=$(cat $SCAFFOLD_DIR/ref_chrom.txt | sed -n ${SLURM_ARRAY_TASK_ID}p)
 SCAFFOLD_NAMES_target_name=${SCAFFOLD_NAMES_target/.txt/}
 
-
 cat ${BASEDIR}/${SCAFFOLD_NAMES_target_name} | prune_graph --weight-field "column_7" --weight-filter "column_7 ≥ 0.2"--out ${BASEDIR}/$SCAFFOLD_NAMES_target.keep
+
+#this code takes each scaffold produced from ngsLD.sh and uses column 7 (=r2) and filters out all of the snps with r2>2
