@@ -1,6 +1,6 @@
 #####ngsLD requires two input files:
 
-# --geno FILE: input file with genotypes, genotype likelihoods or genotype posterior probabilities. 
+#### --geno FILE: input file with genotypes, genotype likelihoods or genotype posterior probabilities. 
 #With low-coverage data, a genotype likelihood file is often used, in which each row is a SNP and 
 #each individual has three columns correponding to the likelihood of the three genotypes 
 #(we only need to keep track of the likelihood of three genotypes (rather than all ten possible) 
@@ -18,7 +18,7 @@ zcat HiC_scaffold_1.beagle.gz | tail -n +2 | awk 'NR % 10 == 0'| cut -f4- | gzip
 zcat HiC_scaffold_1.beagle.gz | tail -n +2 | cut -f4- | gzip > HiC_scaffold_1_trimmed.beagle.gz
 
 
-# --pos FILE: input file with site coordinates (one per line), where the 1st column stands for the 
+#### --pos FILE: input file with site coordinates (one per line), where the 1st column stands for the 
 #chromosome/contig and the 2nd for the position (bp). One convenient way to generate this is by 
 #selecting the first two columns of the mafs file outputted by ANGSD, with the header removed. 
 
@@ -31,13 +31,10 @@ zcat HiC_scaffold_1.mafs.gz | tail -n +2 | awk 'NR % 10 == 0'| cut -f1-2 | gzip 
 #to sample all snps
 zcat HiC_scaffold_1.mafs.gz | tail -n +2 | cut -f1-2 | gzip > HiC_scaffold_1.pos.gz
 
-
-# To get the number of sites in each scaffold for --n_sites INT: total number of sites
-
+#### To get the number of sites in each scaffold for --n_sites INT: total number of sites
 zcat HiC_scaffold_1.pos.gz | wc -l
 
-# To get the number of sites in all scaffolds for --n_sites INT: total number of sites
-
+#### To get the number of sites in all scaffolds for --n_sites INT: total number of sites
 for file in HiC_scaffold_*.pos.gz; do echo "$(zcat "$file" | wc -l) $file"; done
 
 All snps:
@@ -85,4 +82,27 @@ Every other SNP:
 396151 HiC_scaffold_7_subsampled.pos.gz
 379635 HiC_scaffold_8_subsampled.pos.gz
 363799 HiC_scaffold_9_subsampled.pos.gz
+
+Every 10th SNP:
+74485 HiC_scaffold_10_subsampled_10.pos.gz
+70622 HiC_scaffold_11_subsampled_10.pos.gz
+69004 HiC_scaffold_12_subsampled_10.pos.gz
+60411 HiC_scaffold_13_subsampled_10.pos.gz
+61600 HiC_scaffold_14_subsampled_10.pos.gz
+59780 HiC_scaffold_15_subsampled_10.pos.gz
+61429 HiC_scaffold_16_subsampled_10.pos.gz
+53411 HiC_scaffold_17_subsampled_10.pos.gz
+54703 HiC_scaffold_18_subsampled_10.pos.gz
+39469 HiC_scaffold_19_subsampled_10.pos.gz
+122064 HiC_scaffold_1_subsampled_10.pos.gz
+38977 HiC_scaffold_20_subsampled_10.pos.gz
+56108 HiC_scaffold_21_subsampled_10.pos.gz
+116895 HiC_scaffold_2_subsampled_10.pos.gz
+116121 HiC_scaffold_3_subsampled_10.pos.gz
+98085 HiC_scaffold_4_subsampled_10.pos.gz
+96008 HiC_scaffold_5_subsampled_10.pos.gz
+88613 HiC_scaffold_6_subsampled_10.pos.gz
+79230 HiC_scaffold_7_subsampled_10.pos.gz
+75927 HiC_scaffold_8_subsampled_10.pos.gz
+72759 HiC_scaffold_9_subsampled_10.pos.gz
 
