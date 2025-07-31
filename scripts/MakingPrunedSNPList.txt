@@ -1,0 +1,41 @@
+####This is the R script adapted from https://github.com/nt246/lcwgs-guide-tutorial/blob/main/tutorial3_ld_popstructure/markdowns/ld.md 
+####used to make a list of all of my prunned SNPs, processing each scaffold separately
+
+module load R/4.4.1
+
+R
+
+basedir="/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/GLF_2/"
+
+pruned_position <- as.integer(gsub("HiC_scaffold_2:", "", readLines(paste0(basedir, "ngsLD_25kb/HiC_scaffold_2.ld.keep"))))
+
+#This line is best understood from the inside out:
+#paste0(...): It first constructs the full file path to HiC_scaffold_2.ld.keep. This file contains the list of LD-pruned SNPs
+#readLines(...): It reads this file line by line. Each line is an identifier for a SNP, in a format like HiC_scaffold_2:
+#gsub(...): It then uses "global substitution" to remove the text "HiC_scaffold_2:" from each line, leaving only the position number (e.g., "12345").
+#as.integer(...): Finally, it converts these position numbers from text into integers.
+#pruned_position <- ...: The resulting list of integer positions is stored in the pruned_position variable.
+
+snp_list <- read.table(paste0(basedir, "HiC_scaffold_2.mafs.gz"), stringsAsFactors = F, header = T)[,1:4]
+
+#This line reads a gzipped file named HiC_scaffold_2.mafs.gz, which contains information for all SNPs, not just the pruned ones.
+#header = T indicates the file has a header row.
+#[,1:4] subsets the data, keeping only the first four columns, which are typically chromosome, position, major_allele, and minor_allele in an ANGSD .mafs file.
+#The resulting table of all SNPs is stored in the snp_list variable.
+
+pruned_snp_list <- snp_list[snp_list$position %in% pruned_position, ]
+
+#This is the key filtering step. It selects rows from the snp_list data frame where the value in the position column is also present in the pruned_position list created in Step 2.
+#The result is a new data frame, pruned_snp_list, that contains information for only the LD-pruned SNPs.
+
+write.table(pruned_snp_list, paste0(basedir, "ngsLD_25kb/LDpruned_2_snps.list"), col.names = F, row.names = F, quote = F, sep = "\t")
+
+#This line writes the filtered pruned_snp_list to a new file named LDpruned_2_snps.list.
+#The options col.names = F, row.names = F, quote = F, and sep = "\t" ensure the output is a clean, tab-separated file without headers, row numbers, or quotes, 
+#which is the format required by many downstream bioinformatics tools like ANGSD.
+
+
+
+####Then after this did the following to concatenate all .list files into one
+cat LDpruned_*_snps.list > AllScaffolds_snps.list
+
