@@ -5,7 +5,7 @@
 #SBATCH --partition=himem
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=100G
-#SBATCH --time=24:00:00
+#SBATCH --time=7-00
 #SBATCH --job-name=angsdPCA
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
