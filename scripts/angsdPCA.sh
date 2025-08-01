@@ -11,7 +11,6 @@
 #SBATCH --error=%x.%A.%a.err
 
 module load bio/angsd/0.940
-module load bio/samtools/1.19
 
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
