@@ -2,9 +2,9 @@
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=medmem
+#SBATCH --partition=himeme
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=100G
+#SBATCH --mem=200G
 #SBATCH --time=7-00
 #SBATCH --job-name=angsdPCAall
 #SBATCH --output=%x.%A.%a.out
@@ -17,7 +17,7 @@ BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
 REF=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta
 
 
-angsd -b $BASEDIR/ANGSD_bams.txt -anc $REF -out $BASEDIR/ANGSDresults/GLF_2/PCA_allSNPs/ \
+angsd -b $BASEDIR/ANGSD_bams.txt -anc $REF -out $BASEDIR/ANGSDresults/GLF_2/PCA_allSNPs/PCA \
     -minMapQ 20 -minQ 20 -doMaf 1 -minMaf 0.05 -SNP_pval 2e-6 \
     -GL 1 -doGlf 2 -doMajorMinor 1 -doPost 1 \
     -doIBS 1 -doCounts 1 -doCov 1 -makeMatrix 1 -P 4
