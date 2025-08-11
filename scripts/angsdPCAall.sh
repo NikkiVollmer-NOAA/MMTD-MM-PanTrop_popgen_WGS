@@ -2,7 +2,7 @@
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=himeme
+#SBATCH --partition=himem
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=200G
 #SBATCH --time=7-00
