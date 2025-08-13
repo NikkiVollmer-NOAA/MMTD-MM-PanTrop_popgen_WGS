@@ -4,7 +4,7 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=himem
 #SBATCH --cpus-per-task=6
-#SBATCH --mem=200G
+#SBATCH --mem=300G
 #SBATCH --time=7-00
 #SBATCH --job-name=angsdPCAall
 #SBATCH --output=%x.%A.%a.out
