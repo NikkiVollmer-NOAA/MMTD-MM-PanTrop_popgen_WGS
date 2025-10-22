@@ -24,6 +24,7 @@ echo "Running NGSadmix for K = $K_VALUE"
 NGSadmix -likes $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/PCA_LDpruned.beagle.gz' \
          -K $K_VALUE \
          -P 4 \
+         -maxiter 5000 \
          -o $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix/PCA_LDpruned_ngsAdmix_K'$K_VALUE'_out'
 
 echo "Finished K = $K_VALUE"
