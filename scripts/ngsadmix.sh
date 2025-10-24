@@ -9,36 +9,37 @@
 #SBATCH --job-name=ngsadmix
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
-#SBATCH --array=2-6 #<-- RUNS FOR K=2, K=3, K=4, K=5, K=6
+#SBATCH --array=1-50 #<-- 5 K-values (2-6) * 10 replicates = 50 jobs
 
 module load bio/ngsadmix/32
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
 
-# The SLURM_ARRAY_TASK_ID variable will be 2, 3, 4, or 5
-# We assign it to a clearer variable name
-K_VALUE=$SLURM_ARRAY_TASK_ID
+# We have 10 replicates for each K
+REPS_PER_K=10
+# Our K-values start at 2
+K_OFFSET=2
 
-echo "Running NGSadmix for K = $K_VALUE"
+# Calculate K_VALUE and REP_NUM from the SLURM_ARRAY_TASK_ID (1-50)
+# We use ($SLURM_ARRAY_TASK_ID - 1) for 0-based indexing to make math easier
+IDX_ZERO_BASED=$((SLURM_ARRAY_TASK_ID - 1))
+
+# K_VALUE will be 2, 3, 4, 5, or 6
+K_VALUE=$(( (IDX_ZERO_BASED / REPS_PER_K) + K_OFFSET ))
+
+# REP_NUM will be 1, 2, 3, ... 10
+REP_NUM=$(( (IDX_ZERO_BASED % REPS_PER_K) + 1 ))
+
+# SEED will be 1, 2, 3, ... 50 (unique and reproducible for each job)
+SEED=$SLURM_ARRAY_TASK_ID
+
+echo "Running NGSadmix for K = $K_VALUE, Replicate = $REP_NUM, Seed = $SEED"
 
 NGSadmix -likes $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/PCA_LDpruned.beagle.gz' \
          -K $K_VALUE \
          -P 4 \
          -maxiter 5000 \
-         -o $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix/PCA_LDpruned_ngsAdmix_K'$K_VALUE'_out'
+         -seed $SEED \
+         -o $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix/PCA_LDpruned_ngsAdmix_K'$K_VALUE'_rep'$REP_NUM'_out'
 
-echo "Finished K = $K_VALUE"
-
-##to run a single K 
-#NGSadmix -likes $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/PCA_LDpruned.beagle.gz' -K 3 -P 4 -o $BASEDIR'/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix/PCA_LDpruned_ngsAdmix_K3_out'
-
-
-
-
-
-
-
-
-
-
-
+echo "Finished K = $K_VALUE, Replicate = $REP_NUM"
