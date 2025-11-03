@@ -20,17 +20,17 @@ REPS_PER_K=10
 # Our K-values start at 1
 K_OFFSET=1
 
-# Calculate K_VALUE and REP_NUM from the SLURM_ARRAY_TASK_ID (1-50)
+# Calculate K_VALUE and REP_NUM from the SLURM_ARRAY_TASK_ID (1-100)
 # We use ($SLURM_ARRAY_TASK_ID - 1) for 0-based indexing to make math easier
 IDX_ZERO_BASED=$((SLURM_ARRAY_TASK_ID - 1))
 
-# K_VALUE will be 2, 3, 4, 5, or 6
+# K_VALUE will be 1, 2, 3, ... 10
 K_VALUE=$(( (IDX_ZERO_BASED / REPS_PER_K) + K_OFFSET ))
 
 # REP_NUM will be 1, 2, 3, ... 10
 REP_NUM=$(( (IDX_ZERO_BASED % REPS_PER_K) + 1 ))
 
-# SEED will be 1, 2, 3, ... 50 (unique and reproducible for each job)
+# SEED will be 1, 2, 3, ... 100 (unique and reproducible for each job)
 SEED=$SLURM_ARRAY_TASK_ID
 
 echo "Running NGSadmix for K = $K_VALUE, Replicate = $REP_NUM, Seed = $SEED"
