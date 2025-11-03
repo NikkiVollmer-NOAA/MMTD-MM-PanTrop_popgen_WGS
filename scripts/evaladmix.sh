@@ -14,7 +14,7 @@
 module load bio/evaladmix/0.962
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
-NGSADMIX_DIR=$BASEDIR/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix
+NGSADMIX_DIR=$BASEDIR/ANGSDresults/GLF_2/ngsLD_25kb/ngsadmix/K1_K10_10000iter/evaladmix
 BEAGLE_FILE=$BASEDIR/ANGSDresults/GLF_2/ngsLD_25kb/PCA_LDpruned.beagle.gz
 
 # --- Loop over all .fopt.gz files ---
