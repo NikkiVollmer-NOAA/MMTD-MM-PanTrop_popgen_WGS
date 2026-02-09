@@ -15,7 +15,8 @@
 
 module load bio/angsd/0.940
 
-### https://www.popgen.dk/angsd/index.php/Fst
+### this code was run on groups separately to produce saf files to eventually calculate Fst between the groups. Had to make a bam list for the groups I wanted
+### first and ran this code separately on each group. https://www.popgen.dk/angsd/index.php/Fst. For smaller files ran on standard, with 70GB, 4 cpus and 4 threads and for 48 hours
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
 REFERENCE=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta
@@ -25,7 +26,7 @@ SCAFFOLD_NAMES=/scratch2/nvollmer/refseq/ref_chrom.list
 SCAFFOLD_NAMES_target=$(cat $SCAFFOLD_DIR/ref_chrom.txt | sed -n ${SLURM_ARRAY_TASK_ID}p)
 SCAFFOLD_NAMES_target_name=${SCAFFOLD_NAMES_target/.txt/}
 
-angsd -b $BASEDIR/ANGSD_bams_Satt_GOMx.txt -anc $REFERENCE -out $BASEDIR/ANGSDresults/$SCAFFOLD_NAMES_target -r $SCAFFOLD_NAMES_target \
+angsd -b $BASEDIR/ANGSD_bams_Satt_GOMx.txt -anc $REFERENCE -out $BASEDIR/ANGSDresults/saf_runs/Satt_GOMx/$SCAFFOLD_NAMES_target -r $SCAFFOLD_NAMES_target \
         -dosaf 1 -gl 1 -nthreads 6
 
 
