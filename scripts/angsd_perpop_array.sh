@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
@@ -28,5 +26,6 @@ SCAFFOLD_NAMES_target_name=${SCAFFOLD_NAMES_target/.txt/}
 
 angsd -b $BASEDIR/ANGSD_bams_Satt_GOMx.txt -anc $REFERENCE -out $BASEDIR/ANGSDresults/saf_runs/Satt_GOMx/$SCAFFOLD_NAMES_target -r $SCAFFOLD_NAMES_target \
         -dosaf 1 -gl 1 -nthreads 6
+
 
 
