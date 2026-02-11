@@ -11,8 +11,14 @@
 #SBATCH --error=%x.%A.%a.err
 
 module load bio/angsd/0.940
+BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/saf_runs
 
-realSFS cat -b /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/saf_runs/Sfro_wGOMx/saf_list.txt -outnames /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/saf_runs/Sfro_wGOMx/Sfro_wGOMx_merged_saf -P 4
+#for calculating per pop saf for each population
+realSFS cat -b $BASEDIR/Sfro_wGOMx/saf_list.txt -outnames $BASEDIR/Sfro_wGOMx/Sfro_wGOMx_merged_saf -P 4
+
+#for calculating the 2dsfs prior
+realSFS $BASEDIR/Sfro_wGOMx/Sfro_wGOMx_merged_saf.saf.idx $BASEDIR/Sfro_eGOMx/Sfro_eGOMx_merged_saf.saf.idx $BASEDIR/Sfro_sWNA/Sfro_sWNA_merged_saf.saf.idx $BASEDIR/Sfro_Oceanic/Sfro_Oceanic_merged_saf.saf.idx > $BASEDIR/Sfro_4pop.sfs -P 4
+
 
 ##-P is number of threads, https://www.popgen.dk/angsd/index.php/RealSFS#Merge_SAF_files
 ##make sure saf_list.txt has pathway for every file
