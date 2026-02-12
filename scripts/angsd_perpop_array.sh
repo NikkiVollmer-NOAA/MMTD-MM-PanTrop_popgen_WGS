@@ -15,6 +15,7 @@ module load bio/angsd/0.940
 
 ### this code was run on groups separately to produce saf files to eventually calculate Fst between the groups. Had to make a bam list for the groups I wanted
 ### first and ran this code separately on each group. https://www.popgen.dk/angsd/index.php/Fst. For smaller files ran on standard, with 70GB, 4 cpus and 4 threads and for 48 hours
+### this will produce a set of .saf files for every scaffold
 
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned
 REFERENCE=/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta
