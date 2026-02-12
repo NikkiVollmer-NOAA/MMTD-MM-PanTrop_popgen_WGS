@@ -57,8 +57,8 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
             echo "Step A: Estimating 2D-SFS (Subsampled to 20M sites)..."
             realSFS "$SAF1" "$SAF2" -P $THREADS -nSites 20000000 > "${OUTDIR}/${PAIR}.2dsfs"
 
-             # NEW: Collapse to 1 line so Step B doesn't fail
-            awk '{for(i=1;i<=NF;i++) a[i]+=$i} END {for(i=1;i<=NF;i++) printf "%.6f%s", a[i]/NR, (i=$
+           # NEW: Collapse to 1 line so Step B doesn't fail
+            awk '{for(i=1;i<=NF;i++) a[i]+=$i} END {for(i=1;i<=NF;i++) printf "%.6f%s", a[i]/NR, (i==NF?ORS:FS)}' "${OUTDIR}/${PAIR}.tmp.2dsfs" > "${OUTDIR}/${PAIR}.2dsfs"
 
             # Step B: Index the Fst components
             echo "Step B: Indexing Fst..."
