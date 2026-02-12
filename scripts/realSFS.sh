@@ -13,11 +13,11 @@
 module load bio/angsd/0.940
 BASEDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/saf_runs
 
-#for calculating per pop saf for each population
+#for calculating per pop saf for each population. This first step combines all the saf files for each scaffold into a single saf file
 realSFS cat -b $BASEDIR/Sfro_wGOMx/saf_list.txt -outnames $BASEDIR/Sfro_wGOMx/Sfro_wGOMx_merged_saf -P 4
 
-#for calculating the 2dsfs prior
-realSFS $BASEDIR/Sfro_wGOMx/Sfro_wGOMx_merged_saf.saf.idx $BASEDIR/Sfro_eGOMx/Sfro_eGOMx_merged_saf.saf.idx $BASEDIR/Sfro_sWNA/Sfro_sWNA_merged_saf.saf.idx $BASEDIR/Sfro_Oceanic/Sfro_Oceanic_merged_saf.saf.idx > $BASEDIR/Sfro_4pop.sfs -P 4
+#for calculating the 2dsfs prior_can do standard; 4 cpu; 70GB mem
+realSFS $BASEDIR/Sfro_wGOMx/Sfro_wGOMx_merged_saf.saf.idx $BASEDIR/Sfro_eGOMx/Sfro_eGOMx_merged_saf.saf.idx > $BASEDIR/Sfro_eGOMx_wGOMx.global.sfs -P 4
 
 
 ##-P is number of threads, https://www.popgen.dk/angsd/index.php/RealSFS#Merge_SAF_files
