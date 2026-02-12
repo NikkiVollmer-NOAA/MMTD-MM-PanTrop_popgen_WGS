@@ -52,7 +52,7 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
         # Verify files exist before running
         if [[ -f "$SAF1" && -f "$SAF2" ]]; then
 
-            # Step A: Estimate 2D-SFS
+            # Step A: Estimate 2D-SFS (Subsampled to 20M sites)...
             realSFS "$SAF1" "$SAF2" -P $THREADS -nSites 20000000 > "${OUTDIR}/${PAIR}.2dsfs"
 
             # Step B: Index the Fst
