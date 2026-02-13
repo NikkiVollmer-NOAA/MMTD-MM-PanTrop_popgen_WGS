@@ -1,10 +1,10 @@
-7#!/bin/bash
+#!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=medmem
+#SBATCH --partition=himem
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=120G
+#SBATCH --mem=200G
 #SBATCH --time=72:00:00
 #SBATCH --job-name=realSFS_Satt_3pop
 #SBATCH --output=%x.%A.out
@@ -49,33 +49,37 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
         echo "-------------------------------------------------------"
         echo "Comparing $P1 and $P2"
         echo "-------------------------------------------------------"
-
+        
         # Verify files exist before running
         if [[ -f "$SAF1" && -f "$SAF2" ]]; then
 
-            # Step A: Estimate 2D-SFS (The Prior)
-            echo "Step A: Estimating 2D-SFS (Subsampled to 20M sites)..."
-            realSFS "$SAF1" "$SAF2" -P $THREADS -nSites 20000000 > "${OUTDIR}/${PAIR}.2dsfs"
+            echo "Step A: Estimating 2D-SFS for $PAIR..."
+            # We pipe directly to awk to ensure we get exactly 1 line for the Fst indexer
+            realSFS "$SAF1" "$SAF2" -P $THREADS -nSites 20000000 | \
+            awk '{for(i=1;i<=NF;i++) a[i]+=$i; n++} END {for(i=1;i<=NF;i++) printf "%.6f%s", a[i]/n, (i==NF?ORS:FS)}' > "${OUTDIR}/${PAIR}.2dsfs"
 
-           # NEW: Collapse to 1 line so Step B doesn't fail
-            awk '{for(i=1;i<=NF;i++) a[i]+=$i} END {for(i=1;i<=NF;i++) printf "%.6f%s", a[i]/NR, (i==NF?ORS:FS)}' "${OUTDIR}/${PAIR}.tmp.2dsfs" > "${OUTDIR}/${PAIR}.2dsfs"
+            # Step B: Index the Fst
+            # We check if the SFS file was actually created and is not empty before proceeding
+            if [ -s "${OUTDIR}/${PAIR}.2dsfs" ]; then
+                echo "Step B: Indexing Fst for $PAIR..."
+                realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}" -P $THREADS
 
-            # Step B: Index the Fst components
-            echo "Step B: Indexing Fst..."
-            realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}"
+                echo "Step C: Calculating Global Stats for $PAIR..."
+                realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_global.txt"
 
-            # Step C: Calculate Global Fst (Genome-wide average)
-            echo "Step C: Calculating Global Fst stats..."
-            realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_global.txt"
+                echo "Step D: Calculating Sliding Windows for $PAIR..."
+                realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.windows.txt"
 
-            # Step D: Sliding Window Fst (50kb window, 10kb step)
-            echo "Step D: Calculating Sliding Window Fst..."
-            realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.windows.txt"
+                echo "Finished $PAIR successfully."
+            else
+                echo "ERROR: SFS file for $PAIR is empty. Skipping Fst steps."
+            fi
 
-            echo "Finished $PAIR"
         else
-            echo "ERROR: Files not found for $PAIR"
+            echo "SKIPPING: One or both SAF files not found!"
+            echo "Checked: $SAF1"
+            echo "Checked: $SAF2"
         fi
-    done
+     done
 done
 
