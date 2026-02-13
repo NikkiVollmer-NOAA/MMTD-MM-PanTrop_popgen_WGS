@@ -82,6 +82,3 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
      done
 done
 
-
-
-            # Step B: Index the Fst
