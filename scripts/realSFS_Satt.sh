@@ -1,4 +1,5 @@
 ###this run kept timing out, needed to do as array - see realSFS_array.sh
+###also this script only calculates reynolds FST
 
 #!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log
