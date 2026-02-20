@@ -4,7 +4,7 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=20G
+#SBATCH --mem=70G
 #SBATCH --time=48:00:00
 #SBATCH --job-name=realSFS_Sfro_4pop
 #SBATCH --output=%x.%A.%a.out
