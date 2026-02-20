@@ -4,8 +4,8 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=70G
-#SBATCH --time=72:00:00 ##all comparison will finish within a day except the GOM vs ATL which needs the 72 hr limit
+#SBATCH --mem=20G
+#SBATCH --time=96:00:00 ##all comparison will finish within a day except the GOM vs ATL
 #SBATCH --job-name=realSFS_3pop
 #SBATCH --output=%x.%A_%a.out
 #SBATCH --error=%x.%A_%a.err
