@@ -71,21 +71,25 @@ else
 fi
 
 # 4. Diversity and Thetas (Per population)
-echo "Checking Thetas for $P1..."
+# We check BOTH P1 and P2 to ensure all populations in the study are covered
+for POP in "$P1" "$P2"; do
+    echo "Checking Thetas for $POP..."
 
-# Step A: Create 1D-SFS for P1 if it doesn't exist
-if [ ! -f "${OUTDIR}/${P1}.sfs" ]; then
-    realSFS "$SAF1" -P $SLURM_CPUS_PER_TASK > "${OUTDIR}/${P1}.sfs"
-fi
+    # Step A: 1D-SFS
+    if [ ! -f "${OUTDIR}/${POP}.sfs" ]; then
+        echo "Generating 1D-SFS for $POP..."
+        realSFS "${BASEDIR}/${POP%_merged_saf}/${POP}.saf.idx" -P $SLURM_CPUS_PER_TASK -maxIter 100 -tole 1e-6 > "${OUTDIR}/${POP}.sfs"
+    fi
 
-# Step B: Estimate thetas in binary format (Check for existence first!)
-if [ ! -f "${OUTDIR}/${P1}.thetas.idx" ]; then
-    realSFS saf2theta "$SAF1" -sfs "${OUTDIR}/${P1}.sfs" -outname "${OUTDIR}/${P1}" -P $SLURM_CPUS_PER_TASK
-fi
+    # Step B: Raw thetas
+    if [ ! -f "${OUTDIR}/${POP}.thetas.idx" ]; then
+        echo "Estimating raw thetas for $POP..."
+        realSFS saf2theta "${BASEDIR}/${POP%_merged_saf}/${POP}.saf.idx" -sfs "${OUTDIR}/${POP}.sfs" -outname "${OUTDIR}/${POP}" -P $SLURM_CPUS_PER_TASK
+    fi
 
-# Step C: Calculate Stats (Check for existence first!)
-if [ ! -f "${OUTDIR}/${P1}.thetas.windows.gz.pestat" ]; then
-    thetaStat do_stat "${OUTDIR}/${P1}.thetas.idx" -win 50000 -step 10000 -outnames "${OUTDIR}/${P1}.thetas.windows.gz"
-fi
-
-echo "Thetas for $P1 complete."
+    # Step C: Diversity Stats
+    if [ ! -f "${OUTDIR}/${POP}.thetas.windows.gz.pestat" ]; then
+        echo "Calculating pi, Watterson, and Tajima's D for $POP..."
+        thetaStat do_stat "${OUTDIR}/${POP}.thetas.idx" -win 50000 -step 10000 -outnames "${OUTDIR}/${POP}.thetas.windows.gz"
+    fi
+done
