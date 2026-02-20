@@ -42,19 +42,50 @@ realSFS "$SAF1" "$SAF2" -P $SLURM_CPUS_PER_TASK -nSites 20000000 -maxIter 100 -t
 # This prevents the 'dimension prior' error.
 awk '{for(i=1;i<=NF;i++) a[i]+=$i} END {for(i=1;i<=NF;i++) printf "%f%s", a[i], (i==NF?ORS:FS)}' "${OUTDIR}/${PAIR}.mlines" > "${OUTDIR}/${PAIR}.2dsfs"
 
-# 3. Index and Stats
-if [ -s "${OUTDIR}/${PAIR}.2dsfs" ]; then
-    echo "Indexing Fst for $PAIR..."
-    realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}" -P $SLURM_CPUS_PER_TASK
+# 3. Index and Stats - with option for Hudson's type 1, need to has out either FST lines or Hudson's lines depending on what you want to run
+#if [ -s "${OUTDIR}/${PAIR}.2dsfs" ]; then
+#    echo "Indexing Fst for $PAIR..."
+#    realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}" -P $SLURM_CPUS_PER_TASK
 
+#    echo "Calculating Global Stats..."
+#    realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_global.txt"
+
+#echo "Calculating Sliding Windows..."
+#    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.windows.txt"
+
+if [ -s "${OUTDIR}/${PAIR}.2dsfs" ]; then
+    echo "Indexing Hudson Fst (-type 1) for $PAIR..."
+    realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}" -P $SLURM_CPUS_PER_TASK -type 1    
+    
     echo "Calculating Global Stats..."
-    realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_global.txt"
+    realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_hudson_global.txt"
 
     echo "Calculating Sliding Windows..."
-    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.windows.txt"
+    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.hudson_windows.txt"
     
-    # Cleanup the multi-line file to save space
+    # Cleanup inside the 'if' block
     rm "${OUTDIR}/${PAIR}.mlines"
 else
-    echo "ERROR: SFS file was not created correctly."
+    echo "ERROR: SFS file was not created correctly for $PAIR."
+    exit 1
 fi
+
+# 4. Diversity and Thetas (Per population)
+echo "Checking Thetas for $P1..."
+
+# Step A: Create 1D-SFS for P1 if it doesn't exist
+if [ ! -f "${OUTDIR}/${P1}.sfs" ]; then
+    realSFS "$SAF1" -P $SLURM_CPUS_PER_TASK > "${OUTDIR}/${P1}.sfs"
+fi
+
+# Step B: Estimate thetas in binary format (Check for existence first!)
+if [ ! -f "${OUTDIR}/${P1}.thetas.idx" ]; then
+    realSFS saf2theta "$SAF1" -sfs "${OUTDIR}/${P1}.sfs" -outname "${OUTDIR}/${P1}" -P $SLURM_CPUS_PER_TASK
+fi
+
+# Step C: Calculate Stats (Check for existence first!)
+if [ ! -f "${OUTDIR}/${P1}.thetas.windows.gz.pestat" ]; then
+    thetaStat do_stat "${OUTDIR}/${P1}.thetas.idx" -win 50000 -step 10000 -outnames "${OUTDIR}/${P1}.thetas.windows.gz"
+fi
+
+echo "Thetas for $P1 complete."
