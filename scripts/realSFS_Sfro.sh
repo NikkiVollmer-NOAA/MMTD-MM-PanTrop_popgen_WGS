@@ -2,10 +2,10 @@
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=standard
+#SBATCH --partition=medmed
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=70G
-#SBATCH --time=48:00:00
+#SBATCH --mem=120G
+#SBATCH --time=72:00:00
 #SBATCH --job-name=realSFS_Sfro_4pop
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
