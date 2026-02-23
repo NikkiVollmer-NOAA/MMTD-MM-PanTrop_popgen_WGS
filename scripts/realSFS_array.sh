@@ -2,9 +2,9 @@
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=standard
+#SBATCH --partition=himem
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=70G
+#SBATCH --mem=300G #this mem is needed for the GOMx pop
 #SBATCH --time=96:00:00 ##all comparison will finish within a day except the GOM vs ATL
 #SBATCH --job-name=realSFS_3pop
 #SBATCH --output=%x.%A_%a.out
