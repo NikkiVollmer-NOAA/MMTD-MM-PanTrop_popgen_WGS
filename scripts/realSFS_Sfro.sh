@@ -80,10 +80,10 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
             realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}_hudson" -P $THREADS -type 1
 
             echo "Step C: Calculating Global Hudson Stats..."
-            realSFS fst stats "${OUTDIR}/${PAIR}_hudson.fst.idx" > "${OUTDIR}/${PAIR}_hudson_global.txt"
+            realSFS fst stats "${OUTDIR}/${PAIR}_hudson.fst.idx" -type 1 > "${OUTDIR}/${PAIR}_hudson_global.txt"
 
             echo "Step D: Calculating Hudson Sliding Windows..."
-            realSFS fst stats2 "${OUTDIR}/${PAIR}_hudson.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}_hudson.50k.windows.txt"
+            realSFS fst stats2 "${OUTDIR}/${PAIR}_hudson.fst.idx" -type 1 -win 50000 -step 10000 > "${OUTDIR}/${PAIR}_hudson.50k.windows.txt"
 
             echo "Finished Fst for $PAIR successfully."
             
