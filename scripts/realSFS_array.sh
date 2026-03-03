@@ -56,12 +56,12 @@ awk '{for(i=1;i<=NF;i++) a[i]+=$i} END {for(i=1;i<=NF;i++) printf "%f%s", a[i], 
 if [ -s "${OUTDIR}/${PAIR}.2dsfs" ]; then
     echo "Indexing Hudson Fst (-type 1) for $PAIR..."
     realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}" -P $SLURM_CPUS_PER_TASK -type 1    
-    
+        
     echo "Calculating Global Stats..."
-    realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" > "${OUTDIR}/${PAIR}_hudson_global.txt"
+    realSFS fst stats "${OUTDIR}/${PAIR}.fst.idx" -type 1 > "${OUTDIR}/${PAIR}_hudson_global.txt"
 
     echo "Calculating Sliding Windows..."
-    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.hudson_windows.txt"
+    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -type 1 -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.hudson_windows.txt"
     
     # Cleanup inside the 'if' block
     rm "${OUTDIR}/${PAIR}.mlines"
