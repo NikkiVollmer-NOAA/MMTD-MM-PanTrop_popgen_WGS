@@ -2,7 +2,7 @@
 #SBATCH -D /scratch2/nvollmer/log
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
-#SBATCH --partition=medmed
+#SBATCH --partition=medmem
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=120G
 #SBATCH --time=72:00:00
@@ -75,15 +75,15 @@ for (( i=0; i<${#POPS[@]}; i++ )); do
             #    realSFS fst stats2 "${OUTDIR}/${PAIR}.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}.50k.windows.txt"
 
 
-         # Step B: Index Hudson Fst (-type 1)
+         # Step B: Index Hudson Fst (-whichFst 1)
             echo "Step B: Indexing Hudson Fst for $PAIR..."
-            realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}_hudson" -P $THREADS -type 1
+            realSFS fst index "$SAF1" "$SAF2" -sfs "${OUTDIR}/${PAIR}.2dsfs" -fstout "${OUTDIR}/${PAIR}_hudson" -P $THREADS -whichFst 1
 
             echo "Step C: Calculating Global Hudson Stats..."
-            realSFS fst stats "${OUTDIR}/${PAIR}_hudson.fst.idx" -type 1 > "${OUTDIR}/${PAIR}_hudson_global.txt"
+            realSFS fst stats "${OUTDIR}/${PAIR}_hudson.fst.idx" > "${OUTDIR}/${PAIR}_hudson_global.txt"
 
             echo "Step D: Calculating Hudson Sliding Windows..."
-            realSFS fst stats2 "${OUTDIR}/${PAIR}_hudson.fst.idx" -type 1 -win 50000 -step 10000 > "${OUTDIR}/${PAIR}_hudson.50k.windows.txt"
+            realSFS fst stats2 "${OUTDIR}/${PAIR}_hudson.fst.idx" -win 50000 -step 10000 > "${OUTDIR}/${PAIR}_hudson.50k.windows.txt"
 
             echo "Finished Fst for $PAIR successfully."
             
