@@ -1,5 +1,3 @@
-  GNU nano 2.9.8                                                          angsd.sh
-
 #!/bin/bash
 #SBATCH -D /scratch2/nvollmer/log/array_angsd
 #SBATCH --mail-type=END
