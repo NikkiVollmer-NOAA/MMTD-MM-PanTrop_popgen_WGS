@@ -13,7 +13,7 @@
 
 
 module load bio/bcftools
-module load bio/plink
+module load bio/plink/2.00a5.10
 
 cd /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/vcf/
 
