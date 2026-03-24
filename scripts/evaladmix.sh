@@ -5,7 +5,7 @@
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=20G
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH --job-name=evaladmix
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
