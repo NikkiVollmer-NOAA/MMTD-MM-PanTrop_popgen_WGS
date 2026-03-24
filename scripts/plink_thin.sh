@@ -12,11 +12,15 @@
 
 
 module load bio/bcftools
-module load bio/plink/2.00a5.10
+module load bio/plink/1.90b6.23
 
 cd /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/vcf/
 
 
 ## thin 0.02 tells PLINK to keep only 2% of the total variants and discard the other 98%
-plink --bfile admixtools_ready \ --remove relatives_to_remove.txt \ --thin 0.02 \ --make-bed \
+plink --bfile admixtools_ready \
+      --remove relatives_to_remove.txt \
+      --thin 0.02 \
+      --allow-extra-chr \
+      --make-bed \
       --out admixtools_lite
