@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -D /scratch2/nvollmer/log/roh
+#SBATCH -D /scratch2/nvollmer/log/psmc
 #SBATCH --mail-type=END
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --job-name=PSMC
