@@ -31,11 +31,11 @@ do
     # -C 50 helps reduce the impact of poorly mapped reads
     bcftools mpileup -C 50 -f $REF $BAM | \
     bcftools call -c -V indels | \
-    vcfutils.pl vcf2fq -d 4 -D 25 > ${ID}.fq
+    vcfutils.pl vcf2fq -d 2 -D 60 > ${ID}.fq
 
     # 2. Convert FASTQ to PSMC input format
     # -q 20 ensures only high-quality bases are used
-    fq2psmcfa -q 20 ${ID}.fq > ${ID}.psmcfa
+    fq2psmcfa -q 15 ${ID}.fq > ${ID}.psmcfa
 
     # 3. Run the PSMC analysis (same params as Rice's manu)
     # -p Pattern "4+25*2+4+6" is effective for mammals
