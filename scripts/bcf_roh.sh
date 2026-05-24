@@ -4,8 +4,8 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --job-name=ROH
 #SBATCH --cpus-per-task=12
-#SBATCH --mem=48G
-#SBATCH --time=05:00:00
+#SBATCH --mem=64G
+#SBATCH --time=48:00:00
 #SBATCH --partition=standard
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
@@ -37,6 +37,7 @@ bcftools roh \
     --threads 12 \
     --AF-tag AF \
     --skip-indels \
+    -O r \
     -o $OUTPUT \
     $INPUT
 
