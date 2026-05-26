@@ -38,7 +38,7 @@ bcftools roh \
     --AF-tag AF \
     --skip-indels \
     -O r \
-    -o $OUTPUT \
+    -o $OUTPUT
 
 echo "Job finished at: $(date)"
 
