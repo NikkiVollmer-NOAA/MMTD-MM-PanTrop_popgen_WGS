@@ -18,7 +18,7 @@
 #SBATCH --mail-user=nicole.vollmer@noaa.gov
 #SBATCH --job-name=ROHw
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
+#SBATCH --mem=64G
 #SBATCH --time=24:00:00
 #SBATCH --partition=standard
 #SBATCH --output=%x.%A.%a.out
