@@ -25,7 +25,7 @@ SCAFFOLD=$(sort -k2,2nr ${REF}.fai | grep -w -v "HiC_scaffold_21" | head -n 20 |
 echo "Starting variant calling for $SCAFFOLD"
 
 # 2. Generate the raw VCF for ONLY this scaffold using the -r flag
-bcftools mpileup -r $SCAFFOLD -q 30 -Q 20 -a FORMAT/DP -f $REF -b bam8.txt | \
+bcftools mpileup -r $SCAFFOLD -q 30 -Q 20 -a FORMAT/DP -f $REF -b bams8.txt | \
 bcftools call -mv -Oz -o raw_8_${SCAFFOLD}.vcf.gz
 
 # 3. Filter the VCF for pristine SNPs
