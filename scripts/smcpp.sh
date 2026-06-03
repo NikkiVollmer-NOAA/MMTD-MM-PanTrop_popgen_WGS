@@ -11,8 +11,9 @@
 #SBATCH --error=%x.%A.err
 
 # --- LOAD ENVIRONMENT & MODULES ---
-source ~/.bashrc
-mamba activate smcpp-1.15.4
+source /opt/bioinformatics/mambaforge/etc/profile.d/conda.sh
+conda activate smcpp-1.15.4
+export PYTHONNOUSERSITE=1
 module load bio/htslib
 
 cd /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/vcf/
