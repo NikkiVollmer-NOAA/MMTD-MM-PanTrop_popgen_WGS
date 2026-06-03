@@ -7,16 +7,17 @@
 #SBATCH --mem=16G
 #SBATCH --time=12:00:00
 #SBATCH --job-name=bcfconcat
-#SBATCH --output=%x.%A.%a.out
-#SBATCH --error=%x.%A.%a.err
+#SBATCH --output=%x.%A.out
+#SBATCH --error=%x.%A.err
 
 
 module load bio/bcftools
+module load bio/htslib
 
 cd /scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/ANGSDresults/vcf/
 
-# 1. Create a list of all your final filtered scaffold VCFs
-ls final_8_HiC_scaffold_*.vcf.gz > vcf_list.txt
+# 1. Create a list of all your final filtered scaffold VCFs in numerical order (-v)
+ls -v final_8_HiC_scaffold_*.vcf.gz > vcf_list.txt
 
 # 2. Concatenate (stitch) them back together in order
 bcftools concat -f vcf_list.txt -Oz -o final_8_filtered_master.vcf.gz
