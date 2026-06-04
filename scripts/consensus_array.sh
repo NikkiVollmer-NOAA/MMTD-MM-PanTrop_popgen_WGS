@@ -34,7 +34,7 @@ POP=${POPS[$SLURM_ARRAY_TASK_ID]}
 REF="/scratch2/nvollmer/refseq/Stenella_attenuata_HiC.fasta"
 BAMDIR="/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned"
 BAM="${BAMDIR}/${SAMPLE}_clipped_realigned.bam"
-REGIONS="/scratch2/nvollmer/psmc/masks/callable_regions_100kb.bed"
+REGIONS="/scratch2/nvollmer/psmc/masks/callable_regions_500bp.bed"
 OUTDIR="/scratch2/nvollmer/psmc/consensus"
 mkdir -p ${OUTDIR}
 
@@ -49,6 +49,7 @@ echo "================================================"
 
 source /opt/bioinformatics/mambaforge/etc/profile.d/conda.sh
 conda activate ddocent-2.9.8
+module load bio/psmc/0.6.5
 
 # Verify inputs
 if [ ! -f "${BAM}" ]; then
@@ -138,3 +139,5 @@ fi
 echo ""
 echo "Job finished: $(date)"
 echo "================================================"
+
+
