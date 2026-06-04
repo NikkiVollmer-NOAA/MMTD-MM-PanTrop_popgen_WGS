@@ -18,10 +18,8 @@
 # Runtime estimate: 4-12 hours per individual including bootstraps
 # =============================================================================
 
-# NOTE: PSMC must be installed before running this script.
-# If not installed, run this once on a login node first:
-#   mamba create -n psmc -c bioconda -c conda-forge psmc
-#   conda activate psmc && psmc 2>&1 | head -3  # verify
+# NOTE: Requires bio/psmc/0.6.5 module on Sedna HPC
+# Verify with: module load bio/psmc/0.6.5 && psmc 2>&1 | head -3
 
 SAMPLES=(7Satt014  7Satt013  Satt008  7Satt015  8Satt068  515-01   8Satt196  8Satt040)
 POPS=(    ATL       ATL       ATL      ATL       GOM       GOM      GOM       GOM     )
@@ -40,8 +38,7 @@ echo "Job started: $(date)"
 echo "Sample:      ${SAMPLE} (${POP})"
 echo "================================================"
 
-source /opt/bioinformatics/mambaforge/etc/profile.d/conda.sh
-conda activate psmc
+module load bio/psmc/0.6.5
 
 # Verify psmc is available
 if ! command -v psmc &> /dev/null; then
@@ -81,13 +78,13 @@ echo "[$(date)] PSMC complete."
 
 # =============================================================================
 # 6b. Split psmcfa for bootstrapping
-# splitfa randomly resamples segments of the psmcfa
+# /opt/bioinformatics/bio/psmc/psmc-0.6.5/utils/splitfa randomly resamples segments of the psmcfa
 # This accounts for LD structure along chromosomes
 # =============================================================================
 echo ""
 echo "[$(date)] Generating bootstrap replicates..."
 
-splitfa ${PSMCFA} > ${OUTDIR}/${SAMPLE}_split.psmcfa
+/opt/bioinformatics/bio/psmc/psmc-0.6.5/utils/splitfa ${PSMCFA} > ${OUTDIR}/${SAMPLE}_split.psmcfa
 
 # Run 100 bootstraps in parallel using background processes
 # Batched into groups of 4 to match your CPU count
@@ -122,6 +119,19 @@ cat \
     > ${OUTDIR}/${SAMPLE}_combined.psmc
 
 echo "Combined file: ${OUTDIR}/${SAMPLE}_combined.psmc"
+
+# Generate R-ready text tables
+PLOTDIR="/scratch2/nvollmer/psmc/results/${SAMPLE}/R_tables"
+mkdir -p ${PLOTDIR}
+
+/opt/bioinformatics/bio/psmc/psmc-0.6.5/utils/psmc_plot.pl \
+    -u 2.5e-8 \
+    -g 23 \
+    -R \
+    ${PLOTDIR}/${SAMPLE} \
+    ${OUTDIR}/${SAMPLE}_combined.psmc
+
+echo "R table written to: ${PLOTDIR}/${SAMPLE}.0.txt"
 
 # =============================================================================
 # Summary
