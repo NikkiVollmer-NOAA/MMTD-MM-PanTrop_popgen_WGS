@@ -50,6 +50,8 @@ echo "================================================"
 source /opt/bioinformatics/mambaforge/etc/profile.d/conda.sh
 conda activate ddocent-2.9.8
 module load bio/psmc/0.6.5
+module load bio/bcftools/1.21
+module load bio/samtools/1.23
 
 # Verify inputs
 if [ ! -f "${BAM}" ]; then
