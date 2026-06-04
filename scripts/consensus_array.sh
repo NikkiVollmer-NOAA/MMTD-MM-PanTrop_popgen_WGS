@@ -63,12 +63,7 @@ if [ ! -f "${REGIONS}" ]; then
 fi
 
 # Find vcfutils.pl (bundled with bcftools/samtools)
-VCFUTILS=$(find /opt/bioinformatics/mambaforge/envs/ddocent-2.9.8 \
-    -name "vcfutils.pl" 2>/dev/null | head -1)
-if [ -z "${VCFUTILS}" ]; then
-    echo "ERROR: vcfutils.pl not found in ddocent environment."
-    exit 1
-fi
+VCFUTILS="/opt/bioinformatics/bio/bcftools/bcftools-1.21/bin/vcfutils.pl"
 echo "Using vcfutils.pl: ${VCFUTILS}"
 
 # =============================================================================
@@ -139,5 +134,3 @@ fi
 echo ""
 echo "Job finished: $(date)"
 echo "================================================"
-
-
