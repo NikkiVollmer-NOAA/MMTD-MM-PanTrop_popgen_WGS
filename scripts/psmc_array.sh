@@ -5,7 +5,7 @@
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
-#SBATCH --time=1-00:00:00
+#SBATCH --time=7-00:00:00
 #SBATCH --job-name=psmc
 #SBATCH --output=%x.%A_%a.out
 #SBATCH --error=%x.%A_%a.err
