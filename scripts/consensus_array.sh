@@ -125,11 +125,16 @@ echo "Heterozygous windows:    ${HET_WINDOWS}"
 echo "Heterozygosity rate:     ${HET_RATE}"
 echo "Output psmcfa:           ${OUTDIR}/${SAMPLE}.psmcfa"
 echo ""
-echo "Expected heterozygosity for delphinids: ~0.0005 - 0.003"
-if (( $(echo "${HET_RATE} < 0.0001" | bc -l) )); then
+# Note: HET_RATE here is window-level (proportion of 100bp windows with >= 1 het site)
+# NOT per-site heterozygosity. Expected window-level rate for delphinids (pi~0.001):
+#   1 - (1 - 0.001)^100 ~ 0.095 (9.5%)
+# So expected range is roughly 0.05 - 0.15
+echo "Expected window-level heterozygosity for delphinids: ~0.05 - 0.15"
+echo "(Equivalent to per-site pi of ~0.0005 - 0.0015)"
+if (( $(echo "${HET_RATE} < 0.01" | bc -l) )); then
     echo "WARNING: Heterozygosity seems very low — check your consensus calling."
 fi
-if (( $(echo "${HET_RATE} > 0.005" | bc -l) )); then
+if (( $(echo "${HET_RATE} > 0.20" | bc -l) )); then
     echo "WARNING: Heterozygosity seems high — possible residual repeat contamination."
 fi
 
