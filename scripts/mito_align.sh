@@ -28,11 +28,11 @@ module load bio/samtools/1.19
 module load aligners/bwa-mem2/2.2.1
 set -euo pipefail
 
-MANIFEST=/scratch2/nvollmer/analysis/mtdna_pipeline/manifest.txt
-MITO_REF=/scratch2/nvollmer/analysis/mtdna_pipeline/ref/mito_EU557096.fasta
-OUTDIR=/scratch2/nvollmer/analysis/mtdna_pipeline/mito_bams
-FQDIR=/scratch2/nvollmer/analysis/mtdna_pipeline/mito_fastqs
-STATSDIR=/scratch2/nvollmer/analysis/mtdna_pipeline/stats
+MANIFEST=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/mitogenomes/manifest.txt
+MITO_REF=/scratch2/nvollmer/refseq/mitoref/mito_EU557096.fasta
+OUTDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/mitogenomes/mito_bams
+FQDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/mitogenomes/mito_fastqs
+STATSDIR=/scratch2/nvollmer/analysis/Clipped/Clipped_Realigned/mitogenomes/stats
 mkdir -p "$OUTDIR" "$FQDIR" "$STATSDIR"
 
 # Get this array task's sample (1-indexed line of manifest)
