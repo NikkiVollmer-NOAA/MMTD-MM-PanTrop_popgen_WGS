@@ -10,8 +10,10 @@
 #SBATCH --output=%x.%A.%a.out
 #SBATCH --error=%x.%A.%a.err
 
-
 #####script used to transfer batches of fastqs back to sedna#####
+
+module load tools/rclone/1.73.0
+
 # --- Edit these as needed ---
 REMOTE_PATH='test_shared:"Genetics Raw Data/NGS_Data/PanTrop_WGS_GreenCanyon_rawdata/250103_NOA015_RERUN_PanTrop_WGS"'
 DEST_PATH="/scratch2/nvollmer/analysis/NOA015rerun"
