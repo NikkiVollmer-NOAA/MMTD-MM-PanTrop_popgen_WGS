@@ -1,0 +1,41 @@
+#!/bin/bash
+# =============================================================================
+# start-rstudio-server-MitoPilot
+# Launch RStudio Server in an Apptainer container on a SEDNA compute node.
+# Install to ~/bin (see 02_setup_rstudio.sh). Usage:
+#   srun -c 2 --mem=16GB -p standard -t 8:00:00 --pty /bin/bash
+#   mamba activate MitoPilot_deps
+#   ~/bin/start-rstudio-server-MitoPilot
+# Then, in a SECOND SEDNA terminal, confirm the real port:
+#   ssh <node>; ss -tln | grep -E ":8[0-9]{3}"
+# (the printed port has not always matched the port RStudio actually uses)
+# =============================================================================
+Rstudio_version="4.6.2"
+
+cd ~/rstudio
+source ~/.bashrc
+mamba activate MitoPilot_deps
+
+PORT=$(shuf -i 8000-9000 -n 1)
+HOST=$( hostname )
+
+echo ""
+echo "TO ACCESS RSTUDIO SERVER"
+echo "In a terminal on your LOCAL computer (on the NOAA VPN), run:"
+echo "ssh -N -L 8787:${HOST}:${PORT} ${USER}@sedna.nwfsc2.noaa.gov"
+echo "Enter your password; if nothing happens, it worked."
+echo "Then open http://localhost:8787 in your web browser."
+echo "Keep BOTH this window and that local terminal open."
+echo ""
+
+CONDA_ENV="${HOME}/.conda/envs/MitoPilot_deps"
+# Apptainer: use APPTAINERENV_* (the original vignette's --env flag is not
+# supported by older Singularity, and SINGULARITYENV_* triggers a warning)
+export APPTAINERENV_PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${CONDA_ENV}/bin"
+# Make /scratch2 visible inside the container (only $HOME is bound by default)
+export APPTAINER_BIND="/scratch2"
+
+singularity exec \
+ --bind run:/run,var-lib-rstudio-server:/var/lib/rstudio-server,database.conf:/etc/rstudio/database.conf,${CONDA_ENV}/bin,${CONDA_ENV}/lib \
+ rstudio_${Rstudio_version}.sif \
+ rserver --www-address=0.0.0.0 --www-port=${PORT} --server-user=${USER}
