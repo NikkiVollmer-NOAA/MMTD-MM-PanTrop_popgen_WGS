@@ -1,0 +1,24 @@
+# MitoPilot dependency environment used on NOAA SEDNA (Nov 2026)
+# Recreate with:  mamba env create -f envs/MitoPilot_deps.yml
+# Then install MitoPilot itself with scripts/01_install_mitopilot.R
+# For an exact snapshot from SEDNA, run:
+#   mamba env export -n MitoPilot_deps > envs/MitoPilot_deps.lock.yml
+name: MitoPilot_deps
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.6.2
+  - nextflow=25.10        # 26+ breaks nf-sqldb
+  - apptainer             # NOT conda-forge::singularity (2.4.6, needs root)
+  - zlib
+  - libxml2
+  - libxml2-devel         # needed to compile R XML/xml2
+  - libcurl
+  - openssl
+  - bzip2
+  - xz
+  - pkg-config
+  - cmake
+  - make
+  - libuv

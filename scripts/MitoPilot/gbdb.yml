@@ -1,0 +1,11 @@
+# Small environment for building GetOrganelle reference databases from GenBank
+# Recreate with:  mamba env create -f envs/gbdb.yml
+name: gbdb
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - entrez-direct
+  - biopython
+  - python
+  - wget
