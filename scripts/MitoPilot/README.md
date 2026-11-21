@@ -23,9 +23,14 @@ scripts/
   05_fix_config.sh             workaround for the MitoPilot 1.6.0 `multiply` config bug
   run_nextflow.sh              SLURM wrapper for a GUI-generated Nextflow command
   06_make_mapping.sh           build mapping CSVs (one lane per individual)
-  07_build_delphinidae_db.sh   Delphinidae GetOrganelle seed and label databases
+  07_build_delphinidae_db.sh   download Delphinidae records from GenBank
+  08_finalize_ref_dbs.sh       final seedDB (>=15 kb) and labelDB (no no_product)
+  09_compare_mitogenomes.sh    base-by-base comparison (mother/fetus check)
+  10_make_seed_file.sh         same-species seed file from pilot assemblies
+  11_getorg_summary.sh         per-sample GetOrganelle status and coverage (run before deleting work/)
+  12_pairwise_differences.sh   differences between one sample and all others (rotated sequences)
 01_mitopilot_sedna_setup.qmd   setup + test-run documentation
-02_stenella_mitogenomes.qmd    (to come) Stenella runs
+02_stenella_mitogenomes.qmd    Stenella data, databases, pilot run, batches
 ```
 
 ## Quick start (new SEDNA account)
