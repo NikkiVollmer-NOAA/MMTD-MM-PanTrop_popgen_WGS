@@ -29,6 +29,8 @@ scripts/
   10_make_seed_file.sh         same-species seed file from pilot assemblies
   11_getorg_summary.sh         per-sample GetOrganelle status and coverage (run before deleting work/)
   12_pairwise_differences.sh   differences between one sample and all others (rotated sequences)
+  13_species_call_blast.sh     species call per sample by local whole-genome BLAST (use instead of MitoPilot Top BLAST Hit)
+  14_analyze_mitogenomes.py    align all exported mitogenomes, distances, nearest relatives, NJ tree
 01_mitopilot_sedna_setup.qmd   setup + test-run documentation
 02_stenella_mitogenomes.qmd    Stenella data, databases, pilot run, batches
 ```
